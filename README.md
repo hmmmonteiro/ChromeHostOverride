@@ -13,7 +13,7 @@ A simple wrapper for sandboxed Chrome sessions with custom host overrides.
 
 ## Requirements
 
-- Linux
+** For Linux **
 - Bash
 - Google Chrome or Chromium (supporting `--host-resolver-rules`)
 - Python 3
