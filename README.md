@@ -31,7 +31,7 @@ Clone the repository:
 
 ```bash
 git clone https://github.com/hmmmonteiro/ChromeHostOverride.git
-cd ChromeHostOverride
+cd ChromeHostOverride/Linux
 ```
 
 Make the script executable:
