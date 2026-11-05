@@ -73,6 +73,18 @@ Run from PowerShell:
 powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File ".\Windows\ChromeHostOverride.ps1"
 ```
 
+Or
+
+Double-click:
+
+`Windows/ChromeHostOverride.bat`
+
+Alternatively, run it from Command Prompt:
+
+```batch
+ChromeHostOverride.bat
+```
+
 The graphical interface will guide you through:
 
 1. Entering an FQDN and its corresponding IP address.
