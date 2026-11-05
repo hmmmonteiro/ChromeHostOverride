@@ -9,11 +9,12 @@ A simple wrapper for sandboxed Chrome sessions with custom host overrides.
 - Uses Chrome's `--host-resolver-rules` command-line option to override hostname resolution.
 - Creates a separate, timestamped browser profile for every session.
 - Optionally detects and removes previous isolated profiles.
-- Provides a simple graphical interface through Zenity.
+- Provides a graphical interface on both Linux and Windows.
 
 ## Requirements
 
-** For Linux **
+### Linux
+
 - Bash
 - Google Chrome or Chromium (supporting `--host-resolver-rules`)
 - Python 3
@@ -25,30 +26,54 @@ On Debian/Ubuntu:
 sudo apt install zenity python3
 ```
 
+### Windows
+
+- Windows 10 or later
+- Windows PowerShell 5.1 or PowerShell 7
+- Google Chrome or Chromium (supporting `--host-resolver-rules`)
+
+The Windows implementation uses Windows Forms for its graphical interface. No additional GUI dependencies are required.
+
 ## Installation
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/hmmmonteiro/ChromeHostOverride.git
-cd ChromeHostOverride/Linux
+git clone https://github.com/YOUR_USERNAME/ChromeHostOverride.git
+cd ChromeHostOverride
 ```
+
+### Linux
 
 Make the script executable:
 
 ```bash
-chmod +x ChromeHostOverride.sh
+chmod +x Linux/ChromeHostOverride.sh
 ```
 
+### Windows
+
+No installation is required. The PowerShell script can be executed directly.
+
 ## Usage
+
+### Linux
 
 Run:
 
 ```bash
-./ChromeHostOverride.sh
+./Linux/ChromeHostOverride.sh
 ```
 
-The graphical prompts will guide you through:
+### Windows
+
+Run from PowerShell:
+
+```powershell
+powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File ".\Windows\ChromeHostOverride.ps1"
+```
+
+The graphical interface will guide you through:
 
 1. Entering an FQDN and its corresponding IP address.
 2. Adding additional hostname mappings, if needed.
@@ -56,21 +81,31 @@ The graphical prompts will guide you through:
 4. Optionally clearing previous isolated Chrome profiles.
 5. Launching a new Chrome or Chromium session.
 
+The Windows implementation provides an editable table for managing multiple mappings, while the Linux implementation uses individual graphical prompts.
+
 ## How it works
 
 ChromeHostOverride uses Chrome's built-in `--host-resolver-rules` command-line option to redirect specified hostnames to supplied IP addresses, without modifying the system's DNS configuration or hosts file.
 
-Each launch receives its own timestamped user-data directory under:
+Each launch receives its own timestamped user-data directory.
+
+**Linux:**
 
 ```text
 ~/.cache/IsolatedChrome_YYYYMMDD_HHMMSS_NNNNNNNNN/
+```
+
+**Windows:**
+
+```text
+%LOCALAPPDATA%\ChromeHostOverride\IsolatedChrome_YYYYMMDD_HHMMSS_NNN/
 ```
 
 This provides separation of browser data, cookies and session state from your regular Chrome profile and other isolated sessions.
 
 Previous profiles can optionally be removed when launching a new session.
 
-### Security note
+## Security note
 
 ChromeHostOverride provides browser-profile isolation, not an additional security sandbox.
 
