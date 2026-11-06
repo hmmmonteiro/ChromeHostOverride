@@ -53,7 +53,7 @@ The Windows implementation uses Windows Forms for its graphical interface. No ad
 Clone the repository:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ChromeHostOverride.git
+git clone https://github.com/hmmmonteiro/ChromeHostOverride.git
 cd ChromeHostOverride
 ```
 
