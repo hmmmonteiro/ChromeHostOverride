@@ -389,8 +389,12 @@ $launchButton.Add_Click({
         Format-HostResolverRule -FQDN $mapping.fqdn -IP $parsedIP
     }
 
+    # Join with ", " exactly as Chrome expects. Do NOT add extra quotes here;
+    # the quoting is applied once, around the whole value, when building the
+    # argument string below.
     $hostRules = $rules -join ", "
-    $summary   = $rules -join "`r`n"
+
+    $summary = $rules -join "`r`n"
 
     $answer = [System.Windows.Forms.MessageBox]::Show(
         "Chrome will launch with these mappings:`r`n`r`n$summary`r`n`r`nProceed?",
@@ -429,7 +433,6 @@ $launchButton.Add_Click({
                     Remove-Item -LiteralPath $profile.FullName -Recurse -Force -ErrorAction Stop
                 }
                 catch {
-                    # Skip locked profiles; do not block the launch.
                     Write-Warning "Could not remove '$($profile.Name)': $($_.Exception.Message)"
                 }
             }
@@ -447,21 +450,21 @@ $launchButton.Add_Click({
     }
 
     # ------------------------------------------------------------------
-    # Launch Chrome. Pass args as an array; Start-Process will quote
-    # elements containing spaces, so do NOT add your own quotes around
-    # the --host-resolver-rules value.
+    # Build the argument string as a SINGLE STRING.
+    # The --host-resolver-rules value MUST be surrounded by double quotes
+    # so Windows passes the spaces inside it correctly.
     # ------------------------------------------------------------------
-    $arguments = @(
+    $argumentString = @(
         "--incognito"
         "--test-type"
         "--no-first-run"
         "--no-default-browser-check"
-        "--user-data-dir=$userDataDir"
-        "--host-resolver-rules=$hostRules"
-    )
+        "--user-data-dir=`"$userDataDir`""
+        "--host-resolver-rules=`"$hostRules`""
+    ) -join " "
 
     try {
-        Start-Process -FilePath $Chrome -ArgumentList $arguments -ErrorAction Stop
+        Start-Process -FilePath $Chrome -ArgumentList $argumentString -ErrorAction Stop
         $form.Close()
     }
     catch {
