@@ -22,7 +22,10 @@ A simple wrapper for isolated Chrome sessions with custom host overrides.
 | Windows | Linux |
 | :---: | :---: |
 | ![Windows – main window](docs/screenshots/windows-main.png) | ![Linux – main menu](docs/screenshots/linux-main.png) |
-| ![Windows – launch confirmation](docs/screenshots/windows-launch-confirm.png) | ![Linux – session selection](docs/screenshots/linux-session-select.png) |
+|| ![Linux – add FQDN](docs/screenshots/linux-add-fqdn.png) |
+|| ![Linux – add mapping IP](docs/screenshots/linux-add-mapping-ip.png) |
+|| ![Linux – edit mapping](docs/screenshots/linux-edit-mapping.png) |
+|| ![Linux – session selection](docs/screenshots/linux-session-select.png) |
 
 
 ## Requirements
