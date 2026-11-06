@@ -463,6 +463,15 @@ $launchButton.Add_Click({
         "--host-resolver-rules=`"$hostRules`""
     ) -join " "
 
+    $existing = Get-CimInstance Win32_Process -Filter "Name='chrome.exe'" -ErrorAction SilentlyContinue |
+        Where-Object { $_.CommandLine -like "*$CacheDir*" }
+    if ($existing) {
+        [System.Windows.Forms.MessageBox]::Show(
+            "An isolated Chrome session from a previous launch is still running.`r`nClose it before proceeding.",
+            $AppName, "OK", "Warning")
+        return
+    }
+
     try {
         Start-Process -FilePath $Chrome -ArgumentList $argumentString -ErrorAction Stop
         $form.Close()
